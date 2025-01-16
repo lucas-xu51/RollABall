@@ -3,6 +3,7 @@ using UnityEngine;
 public class ball : MonoBehaviour
 {
     public Rigidbody sphereRigibody;
+    public float ballSpeed = 2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +35,8 @@ public class ball : MonoBehaviour
             inputVector += Vector2.left;
         }
 
-        Debug.Log("Resultant Vector: " + inputVector);
+        Vector3 inputXYPlane = new Vector3(inputVector.x, 0, inputVector.y);
+        sphereRigibody.AddForce(inputXYPlane * ballSpeed);
 
     }
 }
