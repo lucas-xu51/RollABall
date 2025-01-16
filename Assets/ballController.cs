@@ -1,9 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ball : MonoBehaviour
 {
     public Rigidbody sphereRigibody;
     public float ballSpeed = 2f;
+    public float jumpForce = 5f;       // 跳跃力度
+    public float rayLength = 0.6f;     // Raycast 的长度
+    private bool isGrounded = false;   // 检测是否在地面
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,5 +41,21 @@ public class ball : MonoBehaviour
         Vector3 inputXYPlane = new Vector3(inputVector.x, 0, inputVector.y);
         sphereRigibody.AddForce(inputXYPlane * ballSpeed);
 
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, rayLength);
+
+        // 跳跃控制
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            sphereRigibody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            
+        }
+
+    }
+
+    void OnDrawGizmos()
+    {
+        // 在 Scene 视图中显示 Raycast
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayLength);
     }
 }
