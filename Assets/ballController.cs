@@ -54,7 +54,6 @@ public class ball : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        // 在 Scene 视图中显示 Raycast
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayLength);
     }
